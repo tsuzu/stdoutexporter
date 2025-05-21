@@ -18,11 +18,11 @@ type Config struct {
 // stdoutExporter implements a traces exporter that writes telemetry data in JSON format to stdout.
 type stdoutExporter struct {
 	config   *Config
-	settings exporter.CreateSettings
+	settings exporter.Settings
 }
 
 // newStdoutExporter creates a new stdoutExporter with the provided configuration and settings.
-func newStdoutExporter(cfg *Config, settings exporter.CreateSettings) *stdoutExporter {
+func newStdoutExporter(cfg *Config, settings exporter.Settings) *stdoutExporter {
 	return &stdoutExporter{
 		config:   cfg,
 		settings: settings,

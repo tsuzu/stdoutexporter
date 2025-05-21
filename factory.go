@@ -11,7 +11,7 @@ import (
 // NewFactory creates a new exporter factory for the stdoutexporter.
 func NewFactory() exporter.Factory {
 	return exporter.NewFactory(
-		"stdoutexporter",
+		component.MustNewType("stdoutexporter"),
 		createDefaultConfig,
 		exporter.WithTraces(createTracesExporter, component.StabilityLevelDevelopment),
 		exporter.WithMetrics(createMetricsExporter, component.StabilityLevelDevelopment),
@@ -25,27 +25,27 @@ func createDefaultConfig() component.Config {
 
 func createTracesExporter(
 	ctx context.Context,
-	set exporter.CreateSettings,
+	set exporter.Settings,
 	cfg component.Config,
 ) (exporter.Traces, error) {
 	exp := newStdoutExporter(cfg.(*Config), set)
-	return exporterhelper.NewTracesExporter(ctx, set, cfg, exp.ConsumeTraces, exporterhelper.WithShutdown(exp.Shutdown))
+	return exporterhelper.NewTraces(ctx, set, cfg, exp.ConsumeTraces, exporterhelper.WithShutdown(exp.Shutdown))
 }
 
 func createMetricsExporter(
 	ctx context.Context,
-	set exporter.CreateSettings,
+	set exporter.Settings,
 	cfg component.Config,
 ) (exporter.Metrics, error) {
 	exp := newStdoutExporter(cfg.(*Config), set)
-	return exporterhelper.NewMetricsExporter(ctx, set, cfg, exp.ConsumeMetrics, exporterhelper.WithShutdown(exp.Shutdown))
+	return exporterhelper.NewMetrics(ctx, set, cfg, exp.ConsumeMetrics, exporterhelper.WithShutdown(exp.Shutdown))
 }
 
 func createLogsExporter(
 	ctx context.Context,
-	set exporter.CreateSettings,
+	set exporter.Settings,
 	cfg component.Config,
 ) (exporter.Logs, error) {
 	exp := newStdoutExporter(cfg.(*Config), set)
-	return exporterhelper.NewLogsExporter(ctx, set, cfg, exp.ConsumeLogs, exporterhelper.WithShutdown(exp.Shutdown))
+	return exporterhelper.NewLogs(ctx, set, cfg, exp.ConsumeLogs, exporterhelper.WithShutdown(exp.Shutdown))
 }
