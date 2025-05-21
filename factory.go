@@ -11,7 +11,7 @@ import (
 // NewFactory creates a new exporter factory for the stdoutexporter.
 func NewFactory() exporter.Factory {
 	return exporter.NewFactory(
-		component.MustNewType("stdoutexporter"),
+		component.MustNewType("stdout"),
 		createDefaultConfig,
 		exporter.WithTraces(createTracesExporter, component.StabilityLevelDevelopment),
 		exporter.WithMetrics(createMetricsExporter, component.StabilityLevelDevelopment),
