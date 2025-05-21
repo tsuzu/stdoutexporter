@@ -1,4 +1,4 @@
-module stdoutexporter
+module github.com/tsuzu/stdoutexporter
 
 go 1.24.1
 
